@@ -44,33 +44,38 @@ const Index = () => {
 
       {/* Hero Section - Planet */}
       <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 overflow-hidden">
-        {/* Massive Planet Background */}
+        {/* Massive Planet Background with Lunar Glow */}
         <motion.div 
-          initial={{ y: -800, scale: 1.2, opacity: 0 }}
-          animate={{ y: -200, scale: 1, opacity: 1 }}
+          initial={{ y: -1000, scale: 1.2, opacity: 0 }}
+          animate={{ y: -150, scale: 1, opacity: 1 }}
           transition={{ duration: 1.8, ease: "easeOut" }}
-          className="absolute -top-96 w-[1200px] h-[1200px] rounded-full bg-gradient-to-b from-space-gray/30 to-transparent"
+          className="absolute -top-[500px] w-[1800px] h-[1800px] rounded-full"
           style={{
-            background: "radial-gradient(circle at 50% 50%, hsl(0 0% 25% / 0.3) 0%, hsl(0 0% 15% / 0.2) 40%, transparent 70%)",
+            background: "radial-gradient(circle at 50% 30%, hsl(0 0% 8% / 0.6) 0%, hsl(0 0% 4% / 0.8) 35%, hsl(0 0% 3% / 0.4) 50%, transparent 65%)",
+            boxShadow: "0 400px 200px -100px hsla(165 45% 75% / 0.15), inset 0 -100px 150px -50px hsla(165 45% 75% / 0.2)"
           }}
         />
         
+        {/* Lunar rim glow */}
         <motion.div
-          initial={{ y: -800, opacity: 0 }}
-          animate={{ y: -200, opacity: 1 }}
+          initial={{ y: -1000, opacity: 0 }}
+          animate={{ y: -150, opacity: 1 }}
           transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
-          className="absolute -top-96 w-[1100px] h-[1100px] rounded-full border border-primary/20"
+          className="absolute -top-[500px] w-[1750px] h-[1750px] rounded-full"
+          style={{
+            boxShadow: "inset 0 -80px 120px -60px hsla(165 45% 75% / 0.4)"
+          }}
         />
 
         <motion.div
-          initial={{ y: -800, opacity: 0 }}
-          animate={{ y: -200, opacity: 1, rotate: 360 }}
+          initial={{ y: -1000, opacity: 0 }}
+          animate={{ y: -150, opacity: 1, rotate: 360 }}
           transition={{ 
             y: { duration: 1.8, ease: "easeOut", delay: 0.1 },
             opacity: { duration: 1.8, ease: "easeOut", delay: 0.1 },
             rotate: { duration: 120, repeat: Infinity, ease: "linear" }
           }}
-          className="absolute -top-96 w-[1000px] h-[1000px] rounded-full border border-primary/10"
+          className="absolute -top-[500px] w-[1600px] h-[1600px] rounded-full border border-primary/10"
         />
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
@@ -262,6 +267,156 @@ const Index = () => {
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Поддержка</h3>
                 <p className="text-foreground/60 text-lg">Наша команда всегда готова помочь вам в любое время суток.</p>
               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-32 px-4 relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-bold text-center mb-6 text-foreground"
+          >
+            Выберите свой <span className="text-primary">ПУТЬ</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-center text-foreground/70 text-xl mb-16"
+          >
+            Начните бесплатно или получите полный доступ к космической скорости
+          </motion.p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Basic Plan */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-8 group cursor-pointer"
+            >
+              <h3 className="text-2xl font-bold mb-2 text-foreground">Базовый</h3>
+              <p className="text-foreground/60 mb-6">Для начала путешествия</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-foreground">$0</span>
+                <span className="text-foreground/60">/месяц</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  5 GB трафика
+                </li>
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  3 локации
+                </li>
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  Базовая скорость
+                </li>
+              </ul>
+              <Button variant="outline" className="w-full border-primary/50 text-foreground hover:bg-primary/10">
+                Начать
+              </Button>
+            </motion.div>
+
+            {/* Pro Plan - Featured */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -15 }}
+              className="island-container p-8 group cursor-pointer relative overflow-hidden md:-mt-4"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="absolute inset-0 bg-primary/20 blur-3xl"
+              />
+              <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground px-4 py-1 text-sm font-bold rounded-full glow-mint">
+                ПОПУЛЯРНЫЙ
+              </div>
+              <div className="relative z-10">
+                <h3 className="text-2xl font-bold mb-2 text-foreground">Премиум</h3>
+                <p className="text-foreground/60 mb-6">Полная свобода</p>
+                <div className="mb-6">
+                  <span className="text-5xl font-bold text-primary">$9.99</span>
+                  <span className="text-foreground/60">/месяц</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-2 text-foreground/90">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
+                    Безлимитный трафик
+                  </li>
+                  <li className="flex items-center gap-2 text-foreground/90">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
+                    50+ локаций
+                  </li>
+                  <li className="flex items-center gap-2 text-foreground/90">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
+                    Максимальная скорость
+                  </li>
+                  <li className="flex items-center gap-2 text-foreground/90">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
+                    До 5 устройств
+                  </li>
+                  <li className="flex items-center gap-2 text-foreground/90">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
+                    Приоритетная поддержка
+                  </li>
+                </ul>
+                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong">
+                  Попробовать бесплатно
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* Ultimate Plan */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-8 group cursor-pointer"
+            >
+              <h3 className="text-2xl font-bold mb-2 text-foreground">Максимум</h3>
+              <p className="text-foreground/60 mb-6">Для профессионалов</p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-foreground">$19.99</span>
+                <span className="text-foreground/60">/месяц</span>
+              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  Всё из Премиум
+                </li>
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  До 10 устройств
+                </li>
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  Выделенный IP
+                </li>
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  VIP поддержка 24/7
+                </li>
+              </ul>
+              <Button variant="outline" className="w-full border-primary/50 text-foreground hover:bg-primary/10">
+                Выбрать план
+              </Button>
             </motion.div>
           </div>
         </div>
