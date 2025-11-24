@@ -10,9 +10,9 @@ const Index = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-6xl"
+        className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
       >
-        <div className="island-container px-6 py-4 flex items-center justify-between">
+        <div className="island-container px-6 py-4 flex items-center justify-between w-full max-w-6xl">
           <motion.div 
             className="text-2xl font-bold text-primary"
             whileHover={{ scale: 1.05 }}
@@ -43,26 +43,41 @@ const Index = () => {
       </motion.header>
 
       {/* Hero Section - Planet */}
-      <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20">
-        {/* Planet/Moon Background */}
+      <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 overflow-hidden">
+        {/* Massive Planet Background */}
         <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2 }}
-          className="absolute top-20 w-[600px] h-[600px] rounded-full bg-gradient-to-b from-space-gray/40 to-space-dark/60 blur-3xl"
+          initial={{ y: -800, scale: 1.2, opacity: 0 }}
+          animate={{ y: -200, scale: 1, opacity: 1 }}
+          transition={{ duration: 1.8, ease: "easeOut" }}
+          className="absolute -top-96 w-[1200px] h-[1200px] rounded-full bg-gradient-to-b from-space-gray/30 to-transparent"
+          style={{
+            background: "radial-gradient(circle at 50% 50%, hsl(0 0% 25% / 0.3) 0%, hsl(0 0% 15% / 0.2) 40%, transparent 70%)",
+          }}
         />
         
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
-          className="absolute top-32 w-[500px] h-[500px] rounded-full border border-primary/10"
+          initial={{ y: -800, opacity: 0 }}
+          animate={{ y: -200, opacity: 1 }}
+          transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
+          className="absolute -top-96 w-[1100px] h-[1100px] rounded-full border border-primary/20"
+        />
+
+        <motion.div
+          initial={{ y: -800, opacity: 0 }}
+          animate={{ y: -200, opacity: 1, rotate: 360 }}
+          transition={{ 
+            y: { duration: 1.8, ease: "easeOut", delay: 0.1 },
+            opacity: { duration: 1.8, ease: "easeOut", delay: 0.1 },
+            rotate: { duration: 120, repeat: Infinity, ease: "linear" }
+          }}
+          className="absolute -top-96 w-[1000px] h-[1000px] rounded-full border border-primary/10"
         />
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 1, delay: 1.5 }}
             className="relative inline-block mb-8"
           >
             <motion.div 
@@ -79,7 +94,7 @@ const Index = () => {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            transition={{ delay: 2, duration: 0.8 }}
             className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-2xl mx-auto"
           >
             Погрузитесь в бескрайнюю пустоту безопасности. 
@@ -89,8 +104,8 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="flex gap-4 justify-center"
+            transition={{ delay: 2.3, duration: 0.8 }}
+            className="flex gap-4 justify-center flex-wrap"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint text-lg px-8">
@@ -107,57 +122,147 @@ const Index = () => {
 
         {/* Floating Elements */}
         <motion.div
-          animate={{ y: [0, -20, 0] }}
+          animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-40 left-20 w-2 h-2 bg-primary rounded-full glow-mint"
         />
         <motion.div
-          animate={{ y: [0, 30, 0] }}
+          animate={{ y: [0, 30, 0], x: [0, -15, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-40 right-32 w-3 h-3 bg-primary/60 rounded-full glow-mint"
         />
+        <motion.div
+          animate={{ y: [0, -25, 0], x: [0, 20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute top-1/3 right-20 w-2 h-2 bg-primary/40 rounded-full glow-mint"
+        />
       </section>
 
-      {/* Features Section */}
+      {/* Premium Features Grid */}
       <section className="py-32 px-4 relative">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-5xl font-bold text-center mb-20 text-foreground"
+            className="text-5xl md:text-6xl font-bold text-center mb-20 text-foreground"
           >
             Почему <span className="text-primary">VOID</span>?
           </motion.h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { icon: Shield, title: "Непробиваемая защита", desc: "Военный уровень шифрования AES-256" },
-              { icon: Zap, title: "Космическая скорость", desc: "Высокоскоростные серверы по всему миру" },
-              { icon: Globe, title: "Без границ", desc: "Доступ к контенту из любой точки планеты" },
-              { icon: Lock, title: "Нулевые логи", desc: "Полная анонимность и конфиденциальность" },
-            ].map((feature, i) => (
+          {/* Large Feature Block */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="island-container p-12 mb-8 group cursor-pointer overflow-hidden relative"
+            whileHover={{ y: -5 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            />
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
               <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-                className="island-container p-8 group cursor-pointer"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 1 }}
+                className="w-24 h-24 rounded-3xl bg-primary/10 flex items-center justify-center glow-mint-strong shrink-0"
               >
+                <Shield className="w-12 h-12 text-primary" />
+              </motion.div>
+              <div className="flex-1">
+                <h3 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Непробиваемая защита</h3>
+                <p className="text-lg text-foreground/70">Военный уровень шифрования AES-256 обеспечивает максимальную безопасность ваших данных. Никто не сможет перехватить или расшифровать ваш трафик.</p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Grid of smaller blocks */}
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-8 group cursor-pointer"
+            >
+              <motion.div
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
+                className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 glow-mint group-hover:glow-mint-strong transition-all"
+              >
+                <Zap className="w-8 h-8 text-primary" />
+              </motion.div>
+              <h3 className="text-xl font-bold mb-3 text-foreground">Космическая скорость</h3>
+              <p className="text-foreground/60">Высокоскоростные серверы по всему миру</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-8 group cursor-pointer md:col-span-2"
+            >
+              <div className="flex items-start gap-6">
                 <motion.div
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
-                  className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 glow-mint group-hover:glow-mint-strong transition-all"
+                  className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center glow-mint group-hover:glow-mint-strong transition-all shrink-0"
                 >
-                  <feature.icon className="w-8 h-8 text-primary" />
+                  <Globe className="w-8 h-8 text-primary" />
                 </motion.div>
-                <h3 className="text-xl font-bold mb-3 text-foreground">{feature.title}</h3>
-                <p className="text-foreground/60">{feature.desc}</p>
+                <div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">Без границ</h3>
+                  <p className="text-foreground/60">Доступ к контенту из любой точки планеты. Обходите любые географические ограничения и наслаждайтесь свободным интернетом.</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Medium sized blocks */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-10 group cursor-pointer"
+            >
+              <motion.div
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
+                className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 glow-mint group-hover:glow-mint-strong transition-all"
+              >
+                <Lock className="w-10 h-10 text-primary" />
               </motion.div>
-            ))}
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Нулевые логи</h3>
+              <p className="text-foreground/60 text-lg">Полная анонимность и конфиденциальность. Мы не храним никаких данных о вашей активности.</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-10 group cursor-pointer relative overflow-hidden"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.1, 0.2, 0.1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="absolute inset-0 bg-primary/20 blur-3xl"
+              />
+              <div className="relative z-10">
+                <div className="text-5xl font-bold text-primary mb-2">24/7</div>
+                <h3 className="text-2xl font-bold mb-4 text-foreground">Поддержка</h3>
+                <p className="text-foreground/60 text-lg">Наша команда всегда готова помочь вам в любое время суток.</p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
