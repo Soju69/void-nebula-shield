@@ -209,15 +209,37 @@ const Checkout = () => {
                 {plan.price > 0 ? `Оплатить $${plan.price}/мес` : 'Начать бесплатно'}
               </Button>
 
-              <Button
-                type="button"
-                size="lg"
-                variant="outline"
-                className="w-full border-primary/50 text-foreground hover:bg-primary/10 text-lg"
-                onClick={() => window.open('https://t.me/your_bot_username', '_blank')}
-              >
-                Оплатить через Telegram Bot
-              </Button>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border/50" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-space-dark px-4 text-foreground/60">или</span>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Button
+                  type="button"
+                  size="lg"
+                  variant="outline"
+                  className="w-full border-primary/50 text-foreground hover:bg-primary/10 text-lg"
+                  onClick={() => window.open('https://t.me/your_bot_username', '_blank')}
+                >
+                  Оплатить через Telegram Bot
+                </Button>
+
+                <div className="island-container p-6 text-center">
+                  <p className="text-sm text-foreground/70 mb-4">Оплата по QR коду</p>
+                  <div className="w-48 h-48 mx-auto bg-background/50 rounded-xl flex items-center justify-center border border-border/50 mb-3">
+                    <div className="text-center">
+                      <div className="w-40 h-40 bg-foreground/10 rounded-lg mb-2" />
+                      <p className="text-xs text-foreground/50">QR код для оплаты</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-foreground/50">Отсканируйте QR код в вашем банковском приложении</p>
+                </div>
+              </div>
 
               <p className="text-xs text-center text-foreground/50">
                 Нажимая "Оплатить" вы соглашаетесь с условиями использования и политикой конфиденциальности
