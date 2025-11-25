@@ -49,7 +49,7 @@ const Index = () => {
           initial={{ y: -800, scale: 1.1, opacity: 0 }}
           animate={{ y: 0, scale: 1, opacity: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
-          className="absolute -top-[300px] w-[1400px] h-[1400px] rounded-full"
+          className="absolute -top-[600px] w-[1200px] h-[1200px] rounded-full"
           style={{
             background: "radial-gradient(circle at 50% 30%, hsl(0 0% 6%) 0%, hsl(0 0% 4%) 40%, hsl(0 0% 2%) 70%, hsl(0 0% 1%) 100%)",
           }}
@@ -60,7 +60,7 @@ const Index = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
-          className="absolute -top-[300px] w-[1400px] h-[1400px] rounded-full pointer-events-none"
+          className="absolute -top-[600px] w-[1200px] h-[1200px] rounded-full pointer-events-none"
           style={{
             background: "radial-gradient(ellipse 60% 15% at 50% 75%, hsla(165 45% 75% / 0.6) 0%, hsla(165 45% 75% / 0.3) 30%, transparent 60%)",
             filter: "blur(20px)"
@@ -75,19 +75,19 @@ const Index = () => {
             opacity: { duration: 2, ease: "easeOut", delay: 0.3 },
             rotate: { duration: 180, repeat: Infinity, ease: "linear" }
           }}
-          className="absolute -top-[300px] w-[1450px] h-[1450px] rounded-full border border-primary/20"
+          className="absolute -top-[600px] w-[1250px] h-[1250px] rounded-full border border-primary/20"
         />
 
         {/* Title ON the planet */}
         <motion.div
           initial={{ scale: 0.5, opacity: 0, y: -400 }}
-          animate={{ scale: 1, opacity: 1, y: -150 }}
+          animate={{ scale: 1, opacity: 1, y: -200 }}
           transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
           className="absolute text-center z-20"
         >
           <h1 className="text-8xl md:text-9xl font-bold text-foreground/90 tracking-wider">
             VOID
-            <span className="block text-primary glow-mint">VPN</span>
+            <span className="block text-primary">VPN</span>
           </h1>
         </motion.div>
 
@@ -144,6 +144,90 @@ const Index = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute top-1/3 right-20 w-2 h-2 bg-primary/40 rounded-full glow-mint"
         />
+      </section>
+
+      {/* Partner Apps Section */}
+      <section className="py-32 px-4 relative">
+        <div className="max-w-7xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-bold text-center mb-8 text-foreground"
+          >
+            Партнерские <span className="text-primary">приложения</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="text-center text-foreground/70 text-xl mb-16"
+          >
+            Рекомендуем использовать для максимальной производительности
+          </motion.p>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-32">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-12 group cursor-pointer relative overflow-hidden"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              />
+              <div className="relative z-10">
+                <div className="w-20 h-20 rounded-3xl bg-primary/20 flex items-center justify-center mb-6 glow-mint">
+                  <span className="text-3xl font-bold text-primary">H</span>
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-foreground">HAPP</h3>
+                <p className="text-lg text-foreground/70 mb-6">
+                  Профессиональное приложение для управления VPN соединениями с расширенными настройками и аналитикой.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="border-primary/50 text-foreground hover:bg-primary/10"
+                  onClick={() => window.open('https://happ.example.com', '_blank')}
+                >
+                  Узнать больше
+                </Button>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+              className="island-container p-12 group cursor-pointer relative overflow-hidden"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              />
+              <div className="relative z-10">
+                <div className="w-20 h-20 rounded-3xl bg-primary/20 flex items-center justify-center mb-6 glow-mint">
+                  <span className="text-3xl font-bold text-primary">V2</span>
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-foreground">V2rayTun</h3>
+                <p className="text-lg text-foreground/70 mb-6">
+                  Мощный клиент с поддержкой V2Ray протокола для максимальной скорости и безопасности подключения.
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="border-primary/50 text-foreground hover:bg-primary/10"
+                  onClick={() => window.open('https://v2raytun.example.com', '_blank')}
+                >
+                  Узнать больше
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* Premium Features Grid */}
