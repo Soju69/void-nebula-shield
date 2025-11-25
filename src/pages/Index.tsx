@@ -44,66 +44,64 @@ const Index = () => {
 
       {/* Hero Section - Planet */}
       <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 overflow-hidden">
-        {/* Massive Planet Background with Lunar Glow */}
+        {/* Large Dark Planet */}
         <motion.div 
-          initial={{ y: -1000, scale: 1.2, opacity: 0 }}
-          animate={{ y: -150, scale: 1, opacity: 1 }}
-          transition={{ duration: 1.8, ease: "easeOut" }}
-          className="absolute -top-[500px] w-[1800px] h-[1800px] rounded-full"
+          initial={{ y: -800, scale: 1.1, opacity: 0 }}
+          animate={{ y: 0, scale: 1, opacity: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          className="absolute -top-[300px] w-[1400px] h-[1400px] rounded-full"
           style={{
-            background: "radial-gradient(circle at 50% 30%, hsl(0 0% 8% / 0.6) 0%, hsl(0 0% 4% / 0.8) 35%, hsl(0 0% 3% / 0.4) 50%, transparent 65%)",
-            boxShadow: "0 400px 200px -100px hsla(165 45% 75% / 0.15), inset 0 -100px 150px -50px hsla(165 45% 75% / 0.2)"
+            background: "radial-gradient(circle at 50% 30%, hsl(0 0% 6%) 0%, hsl(0 0% 4%) 40%, hsl(0 0% 2%) 70%, hsl(0 0% 1%) 100%)",
           }}
         />
         
-        {/* Lunar rim glow */}
+        {/* Light beam from behind planet - lower edge */}
         <motion.div
-          initial={{ y: -1000, opacity: 0 }}
-          animate={{ y: -150, opacity: 1 }}
-          transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
-          className="absolute -top-[500px] w-[1750px] h-[1750px] rounded-full"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+          className="absolute -top-[300px] w-[1400px] h-[1400px] rounded-full pointer-events-none"
           style={{
-            boxShadow: "inset 0 -80px 120px -60px hsla(165 45% 75% / 0.4)"
+            background: "radial-gradient(ellipse 60% 15% at 50% 75%, hsla(165 45% 75% / 0.6) 0%, hsla(165 45% 75% / 0.3) 30%, transparent 60%)",
+            filter: "blur(20px)"
           }}
         />
 
+        {/* Subtle planetary ring glow */}
         <motion.div
-          initial={{ y: -1000, opacity: 0 }}
-          animate={{ y: -150, opacity: 1, rotate: 360 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, rotate: 360 }}
           transition={{ 
-            y: { duration: 1.8, ease: "easeOut", delay: 0.1 },
-            opacity: { duration: 1.8, ease: "easeOut", delay: 0.1 },
-            rotate: { duration: 120, repeat: Infinity, ease: "linear" }
+            opacity: { duration: 2, ease: "easeOut", delay: 0.3 },
+            rotate: { duration: 180, repeat: Infinity, ease: "linear" }
           }}
-          className="absolute -top-[500px] w-[1600px] h-[1600px] rounded-full border border-primary/10"
+          className="absolute -top-[300px] w-[1450px] h-[1450px] rounded-full border border-primary/20"
         />
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, delay: 1.5 }}
-            className="relative inline-block mb-8"
-          >
-            <motion.div 
-              className="absolute inset-0 bg-primary/20 rounded-full blur-3xl glow-mint-strong"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            />
-            <h1 className="text-7xl md:text-9xl font-bold text-foreground relative">
-              VOID
-              <span className="block text-primary">VPN</span>
-            </h1>
-          </motion.div>
+        {/* Title ON the planet */}
+        <motion.div
+          initial={{ scale: 0.5, opacity: 0, y: -400 }}
+          animate={{ scale: 1, opacity: 1, y: -150 }}
+          transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
+          className="absolute text-center z-20"
+        >
+          <h1 className="text-8xl md:text-9xl font-bold text-foreground/90 tracking-wider">
+            VOID
+            <span className="block text-primary glow-mint">VPN</span>
+          </h1>
+        </motion.div>
 
+        {/* Content below planet */}
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto mt-[400px]">
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2, duration: 0.8 }}
-            className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-2xl mx-auto"
+            className="text-xl md:text-2xl text-foreground/80 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             Погрузитесь в бескрайнюю пустоту безопасности. 
-            Непробиваемая защита. Космическая скорость.
+            <br />
+            <span className="text-primary">Непробиваемая защита. Космическая скорость.</span>
           </motion.p>
 
           <motion.div
@@ -118,8 +116,13 @@ const Index = () => {
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" variant="outline" className="border-primary/50 text-foreground hover:bg-primary/10 text-lg px-8">
-                Узнать больше
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-primary/50 text-foreground hover:bg-primary/10 text-lg px-8"
+                onClick={() => window.open('https://t.me/your_bot_username', '_blank')}
+              >
+                Telegram Bot
               </Button>
             </motion.div>
           </motion.div>
@@ -324,7 +327,11 @@ const Index = () => {
                   Базовая скорость
                 </li>
               </ul>
-              <Button variant="outline" className="w-full border-primary/50 text-foreground hover:bg-primary/10">
+              <Button 
+                variant="outline" 
+                className="w-full border-primary/50 text-foreground hover:bg-primary/10"
+                onClick={() => window.location.href = '/checkout?plan=basic'}
+              >
                 Начать
               </Button>
             </motion.div>
@@ -375,7 +382,10 @@ const Index = () => {
                     Приоритетная поддержка
                   </li>
                 </ul>
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong">
+                <Button 
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong"
+                  onClick={() => window.location.href = '/checkout?plan=premium'}
+                >
                   Попробовать бесплатно
                 </Button>
               </div>
@@ -414,7 +424,11 @@ const Index = () => {
                   VIP поддержка 24/7
                 </li>
               </ul>
-              <Button variant="outline" className="w-full border-primary/50 text-foreground hover:bg-primary/10">
+              <Button 
+                variant="outline" 
+                className="w-full border-primary/50 text-foreground hover:bg-primary/10"
+                onClick={() => window.location.href = '/checkout?plan=maximum'}
+              >
                 Выбрать план
               </Button>
             </motion.div>
