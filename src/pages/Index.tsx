@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Shield, Zap, Globe, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const Index = () => {
+  useAnalytics();
   return (
     <div className="min-h-screen bg-space-dark starfield noise-texture relative overflow-hidden">
       {/* Header - Island Style */}

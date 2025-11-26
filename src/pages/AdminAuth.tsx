@@ -5,9 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Lock, Shield } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 const AdminAuth = () => {
   const navigate = useNavigate();
+  useAnalytics();
   const [formData, setFormData] = useState({
     email: "",
     password: ""

@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analytics: {
+        Row: {
+          country: string | null
+          created_at: string | null
+          id: string
+          page_url: string
+          referrer: string | null
+          screen_resolution: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string | null
+          id?: string
+          page_url: string
+          referrer?: string | null
+          screen_resolution?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          country?: string | null
+          created_at?: string | null
+          id?: string
+          page_url?: string
+          referrer?: string | null
+          screen_resolution?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      vpn_configs: {
+        Row: {
+          config_data: string
+          created_at: string | null
+          id: string
+          subscription_plan: string
+          user_email: string
+        }
+        Insert: {
+          config_data: string
+          created_at?: string | null
+          id?: string
+          subscription_plan: string
+          user_email: string
+        }
+        Update: {
+          config_data?: string
+          created_at?: string | null
+          id?: string
+          subscription_plan?: string
+          user_email?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

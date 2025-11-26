@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { CreditCard, Lock, ArrowLeft } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAnalytics, trackEvent } from "@/hooks/useAnalytics";
 
 const plans = {
   basic: { name: "Базовый", price: 0, features: ["5 GB трафика", "3 локации", "Базовая скорость"] },
@@ -15,6 +16,7 @@ const plans = {
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  useAnalytics();
   const searchParams = new URLSearchParams(location.search);
   const planKey = (searchParams.get('plan') || 'premium') as keyof typeof plans;
   const plan = plans[planKey];
@@ -29,8 +31,8 @@ const Checkout = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Redirect to payment success page
-    navigate('/payment-success');
+    trackEvent('payment_initiated', { plan: plan.name });
+    navigate('/payment-success', { state: { email: formData.email, plan: plan.name } });
   };
 
   return (
