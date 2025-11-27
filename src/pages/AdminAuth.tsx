@@ -1,25 +1,96 @@
+// ========================================
+// СТРАНИЦА АУТЕНТИФИКАЦИИ АДМИНИСТРАТОРА
+// ========================================
+// 
+// Эта страница отвечает за вход администраторов в систему.
+// 
+// Как это работает:
+// 1. Администратор вводит логин (username) и пароль
+// 2. Система проверяет данные по списку в src/config/admin-config.ts
+// 3. При успешной аутентификации создается сессия в localStorage
+// 4. Администратор перенаправляется в админ-панель (/admin)
+//
+// ========================================
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Lock, Shield } from "lucide-react";
+import { Lock, Shield, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAnalytics } from "@/hooks/useAnalytics";
+// ========================================
+// ИМПОРТ: Система статической аутентификации
+// ========================================
+import { authenticateUser, createSession } from "@/lib/static-auth";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AdminAuth = () => {
   const navigate = useNavigate();
   useAnalytics();
+  
+  // ========================================
+  // СОСТОЯНИЕ ФОРМЫ
+  // ========================================
+  // username: Логин администратора (из admin-config.ts)
+  // password: Пароль администратора
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: ""
   });
+  
+  // ========================================
+  // СОСТОЯНИЕ ЗАГРУЗКИ И ОШИБОК
+  // ========================================
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ========================================
+  // ОБРАБОТКА ОТПРАВКИ ФОРМЫ
+  // ========================================
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple auth check - in production use real authentication
-    if (formData.email && formData.password) {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // ========================================
+      // ШАГ 1: Проверка данных пользователя
+      // ========================================
+      // Функция authenticateUser проверяет:
+      // 1. Существует ли пользователь с таким username
+      // 2. Совпадает ли пароль с сохраненным хешем
+      const user = await authenticateUser(formData.username, formData.password);
+      
+      if (!user) {
+        // ========================================
+        // ОШИБКА: Неверный логин или пароль
+        // ========================================
+        setError('Неверный логин или пароль');
+        setIsLoading(false);
+        return;
+      }
+      
+      // ========================================
+      // ШАГ 2: Создание сессии
+      // ========================================
+      // Сохраняем информацию о сессии в localStorage
+      createSession(user);
+      
+      // ========================================
+      // ШАГ 3: Перенаправление в админ-панель
+      // ========================================
+      console.log('✅ Успешный вход:', user.username);
       navigate('/admin');
+      
+    } catch (err) {
+      // ========================================
+      // ОБРАБОТКА ОШИБОК
+      // ========================================
+      console.error('❌ Ошибка аутентификации:', err);
+      setError('Произошла ошибка при входе');
+      setIsLoading(false);
     }
   };
 
@@ -78,23 +149,67 @@ const AdminAuth = () => {
             Войдите для доступа к панели управления
           </p>
 
+          {/* ========================================
+              ФОРМА АУТЕНТИФИКАЦИИ
+              ========================================
+              
+              Поля формы:
+              1. username - Логин администратора
+              2. password - Пароль администратора
+              
+              После отправки формы происходит проверка
+              данных и создание сессии.
+              ======================================== */}
+          
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* ========================================
+                ОТОБРАЖЕНИЕ ОШИБОК
+                ======================================== */}
+            {error && (
+              <Alert variant="destructive" className="bg-destructive/10 border-destructive/50">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            
+            {/* ========================================
+                ПОЛЕ: Логин (username)
+                ========================================
+                
+                Введите username из файла:
+                src/config/admin-config.ts
+                
+                Например: "admin"
+                ======================================== */}
             <div>
-              <Label htmlFor="email" className="text-foreground/90 flex items-center gap-2">
+              <Label htmlFor="username" className="text-foreground/90 flex items-center gap-2">
                 <Lock className="w-4 h-4" />
-                Email
+                Логин
               </Label>
               <Input 
-                id="email"
-                type="email"
-                placeholder="admin@voidvpn.com"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                id="username"
+                type="text"
+                placeholder="admin"
+                value={formData.username}
+                onChange={(e) => setFormData({...formData, username: e.target.value})}
                 required
+                disabled={isLoading}
                 className="mt-2 bg-background/50 border-border/50 text-foreground"
               />
             </div>
 
+            {/* ========================================
+                ПОЛЕ: Пароль
+                ========================================
+                
+                Введите пароль для администратора.
+                
+                Пароль проверяется по BCrypt хешу из:
+                src/config/admin-config.ts
+                
+                Для генерации хеша используйте:
+                https://bcrypt-generator.com/
+                ======================================== */}
             <div>
               <Label htmlFor="password" className="text-foreground/90 flex items-center gap-2">
                 <Lock className="w-4 h-4" />
@@ -107,16 +222,27 @@ const AdminAuth = () => {
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
                 required
+                disabled={isLoading}
                 className="mt-2 bg-background/50 border-border/50 text-foreground"
               />
             </div>
 
+            {/* ========================================
+                КНОПКА ВХОДА
+                ========================================
+                
+                При нажатии:
+                1. Проверяются учетные данные
+                2. Создается сессия в localStorage
+                3. Происходит перенаправление в /admin
+                ======================================== */}
             <Button 
               type="submit"
               size="lg" 
+              disabled={isLoading}
               className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint text-lg"
             >
-              Войти
+              {isLoading ? 'Вход...' : 'Войти'}
             </Button>
 
             <div className="flex items-center gap-2 text-xs text-foreground/50 justify-center">

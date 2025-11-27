@@ -1,3 +1,20 @@
+// ========================================
+// АДМИН-ПАНЕЛЬ
+// ========================================
+// 
+// Эта страница отображает статистику и аналитику
+// для администраторов.
+//
+// Доступ к этой странице имеют только
+// аутентифицированные администраторы.
+//
+// Данные берутся из:
+// - Таблица analytics (посещения)
+// - Таблица vpn_configs (конфигурации)
+// - Telegram API (статистика подписчиков)
+//
+// ========================================
+
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Users, DollarSign, TrendingUp } from "lucide-react";
@@ -6,6 +23,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+// ========================================
+// ИМПОРТ: Система проверки аутентификации
+// ========================================
+import { isAuthenticated, clearSession, getSession } from "@/lib/static-auth";
 
 interface AnalyticsData {
   page_url: string;
@@ -17,19 +38,58 @@ const Admin = () => {
   useAnalytics();
   const navigate = useNavigate();
   
+  // ========================================
+  // СОСТОЯНИЕ: Статистика
+  // ========================================
   const [stats, setStats] = useState({
-    totalVisits: 0,
-    uniquePages: 0,
-    todayVisits: 0,
-    growthRate: "+0%"
+    totalVisits: 0,      // Всего посещений
+    uniquePages: 0,      // Уникальных страниц
+    todayVisits: 0,      // Посещений сегодня
+    growthRate: "+0%"    // Рост посещаемости
   });
 
+  // ========================================
+  // СОСТОЯНИЕ: Источники трафика
+  // ========================================
   const [trafficSources, setTrafficSources] = useState<{source: string, visits: number}[]>([]);
+  
+  // ========================================
+  // СОСТОЯНИЕ: Последние посещения
+  // ========================================
   const [recentVisits, setRecentVisits] = useState<AnalyticsData[]>([]);
 
+  // ========================================
+  // ПРОВЕРКА АУТЕНТИФИКАЦИИ
+  // ========================================
+  // При загрузке страницы проверяем,
+  // аутентифицирован ли пользователь.
+  // Если нет - перенаправляем на страницу входа.
   useEffect(() => {
+    if (!isAuthenticated()) {
+      console.warn('🚫 Доступ запрещен: требуется аутентификация');
+      navigate('/admin-auth');
+      return;
+    }
+    
+    const session = getSession();
+    console.log('✅ Доступ разрешен:', session?.username);
+  }, [navigate]);
+
+  // ========================================
+  // ЗАГРУЗКА СТАТИСТИКИ
+  // ========================================
+  // Загружаем данные из таблицы analytics
+  useEffect(() => {
+    // ========================================
+    // ФУНКЦИЯ: Загрузка аналитики
+    // ========================================
     const fetchAnalytics = async () => {
       try {
+        // ========================================
+        // ШАГ 1: Получение всех данных из analytics
+        // ========================================
+        // TODO: Для статической версии можно заменить
+        // на mock данные или файл JSON
         const { data: allData, error } = await supabase
           .from('analytics')
           .select('*')
@@ -38,18 +98,33 @@ const Admin = () => {
         if (error) throw error;
 
         if (allData) {
+          // ========================================
+          // ШАГ 2: Подсчет общей статистики
+          // ========================================
           setStats(prev => ({
             ...prev,
             totalVisits: allData.length,
             uniquePages: new Set(allData.map(d => d.page_url)).size
           }));
 
+          // ========================================
+          // ШАГ 3: Подсчет посещений за сегодня
+          // ========================================
           const today = new Date().toISOString().split('T')[0];
           const todayData = allData.filter(d => 
             d.created_at.startsWith(today)
           );
           setStats(prev => ({ ...prev, todayVisits: todayData.length }));
 
+          // ========================================
+          // ШАГ 4: Группировка по источникам трафика
+          // ========================================
+          // Определяем источник по referrer:
+          // - google -> Google
+          // - t.me -> Telegram
+          // - facebook/vk -> Социальные сети
+          // - другое -> Другое
+          // - пусто -> Прямые переходы
           const sources = allData.reduce((acc: any, item) => {
             let source = 'Прямые переходы';
             if (item.referrer && item.referrer !== 'direct') {
@@ -69,10 +144,23 @@ const Admin = () => {
             }))
           );
 
+          // ========================================
+          // ШАГ 5: Последние 10 посещений
+          // ========================================
           setRecentVisits(allData.slice(0, 10));
         }
       } catch (error) {
-        console.error('Error fetching analytics:', error);
+        console.error('❌ Ошибка загрузки аналитики:', error);
+        
+        // ========================================
+        // TODO: Добавьте mock данные для статической версии
+        // ========================================
+        // setStats({
+        //   totalVisits: 1247,
+        //   uniquePages: 15,
+        //   todayVisits: 89,
+        //   growthRate: "+12%"
+        // });
       }
     };
 
@@ -95,9 +183,20 @@ const Admin = () => {
           >
             VOID VPN Admin
           </motion.div>
+          {/* ========================================
+              КНОПКА ВЫХОДА
+              ========================================
+              
+              При нажатии:
+              1. Удаляется сессия из localStorage
+              2. Происходит перенаправление на главную
+              ======================================== */}
           <Button 
             variant="outline"
-            onClick={() => navigate('/')}
+            onClick={() => {
+              clearSession();
+              navigate('/');
+            }}
             className="border-primary/50 text-foreground hover:bg-primary/10"
           >
             Выйти
