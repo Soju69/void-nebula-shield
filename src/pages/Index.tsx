@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
-import { Shield, Zap, Globe, Lock } from "lucide-react";
+import { Shield, Zap, Globe, Lock, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useTelegramStats } from "@/hooks/useTelegramStats";
 
 const Index = () => {
   useAnalytics();
+  const { memberCount, loading } = useTelegramStats();
+  
   return (
     <div className="min-h-screen bg-space-dark starfield noise-texture relative overflow-hidden">
       {/* Header - Island Style */}
@@ -541,14 +544,46 @@ const Index = () => {
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
               Готовы войти в <span className="text-primary">ПУСТОТУ</span>?
             </h2>
+            
+            {/* Telegram Stats */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center justify-center gap-3 mb-6"
+            >
+              <div className="flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 border border-primary/20">
+                <Users className="w-5 h-5 text-primary" />
+                <span className="text-foreground/70">Уже с нами:</span>
+                <span className="text-2xl font-bold text-primary">
+                  {loading ? '...' : memberCount.toLocaleString()}
+                </span>
+                <span className="text-foreground/70">клиентов</span>
+              </div>
+            </motion.div>
+            
             <p className="text-xl text-foreground/70 mb-10">
               Присоединяйтесь к тысячам пользователей, которые выбрали свободу
             </p>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong text-xl px-12">
-                Начать сейчас
-              </Button>
-            </motion.div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong text-xl px-12">
+                  Начать сейчас
+                </Button>
+              </motion.div>
+              
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="border-primary/50 text-foreground hover:bg-primary/10 text-xl px-12"
+                  onClick={() => window.open('https://t.me/your_channel', '_blank')}
+                >
+                  Присоединиться к Telegram
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </section>
