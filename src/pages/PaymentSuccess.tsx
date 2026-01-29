@@ -111,7 +111,7 @@ const PaymentSuccess = () => {
             transition={{ delay: 0.7 }}
             className="text-xl text-foreground/70 mb-8"
           >
-            Добро пожаловать в <span className="text-primary font-bold">VOID VPN</span>
+            Добро пожаловать в <span className="text-primary font-bold">VOID Shield</span>
           </motion.p>
 
           <motion.div

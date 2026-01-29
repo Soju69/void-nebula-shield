@@ -3,6 +3,9 @@ import { Shield, Zap, Globe, Lock, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useTelegramStats } from "@/hooks/useTelegramStats";
+import TelegramBotBanner from "@/components/TelegramBotBanner";
+
+const TELEGRAM_BOT_URL = "https://t.me/your_bot"; // Замените на реальную ссылку бота
 
 const Index = () => {
   useAnalytics();
@@ -22,10 +25,10 @@ const Index = () => {
             className="text-2xl font-bold text-primary"
             whileHover={{ scale: 1.05 }}
           >
-            VOID VPN
+            VOID Shield
           </motion.div>
           <nav className="hidden md:flex gap-8">
-            {["Features", "Security", "Speed", "Pricing"].map((item, i) => (
+            {["Возможности", "Безопасность", "Скорость", "Тарифы"].map((item, i) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -40,8 +43,11 @@ const Index = () => {
             ))}
           </nav>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint">
-              Get Started
+            <Button 
+              className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint"
+              onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
+            >
+              Начать
             </Button>
           </motion.div>
         </div>
@@ -90,9 +96,9 @@ const Index = () => {
           transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
           className="absolute text-center z-20"
         >
-          <h1 className="text-8xl md:text-9xl font-bold text-foreground/90 tracking-wider">
+          <h1 className="text-7xl md:text-8xl font-bold text-foreground/90 tracking-wider">
             VOID
-            <span className="block text-primary">VPN</span>
+            <span className="block text-primary text-5xl md:text-6xl mt-2">Shield</span>
           </h1>
         </motion.div>
 
@@ -106,7 +112,7 @@ const Index = () => {
           >
             Погрузитесь в бескрайнюю пустоту безопасности. 
             <br />
-            <span className="text-primary">Непробиваемая защита. Космическая скорость.</span>
+            <span className="text-primary">Void Internet — свобода без границ.</span>
           </motion.p>
 
           <motion.div
@@ -116,7 +122,11 @@ const Index = () => {
             className="flex gap-4 justify-center flex-wrap"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint text-lg px-8">
+              <Button 
+                size="lg" 
+                className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint text-lg px-8"
+                onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
+              >
                 Начать бесплатно
               </Button>
             </motion.div>
@@ -125,7 +135,7 @@ const Index = () => {
                 size="lg" 
                 variant="outline" 
                 className="border-primary/50 text-foreground hover:bg-primary/10 text-lg px-8"
-                onClick={() => window.open('https://t.me/your_bot_username', '_blank')}
+                onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
               >
                 Telegram Bot
               </Button>
@@ -149,6 +159,13 @@ const Index = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute top-1/3 right-20 w-2 h-2 bg-primary/40 rounded-full glow-mint"
         />
+      </section>
+
+      {/* Telegram Bot Banner */}
+      <section className="py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <TelegramBotBanner botUrl={TELEGRAM_BOT_URL} />
+        </div>
       </section>
 
       {/* Partner Apps Section */}
@@ -191,7 +208,7 @@ const Index = () => {
                 </div>
                 <h3 className="text-3xl font-bold mb-4 text-foreground">HAPP</h3>
                 <p className="text-lg text-foreground/70 mb-6">
-                  Профессиональное приложение для управления VPN соединениями с расширенными настройками и аналитикой.
+                  Профессиональное приложение для управления Void Internet соединениями с расширенными настройками и аналитикой.
                 </p>
                 <Button 
                   variant="outline" 
@@ -314,7 +331,7 @@ const Index = () => {
                 </motion.div>
                 <div>
                   <h3 className="text-xl font-bold mb-3 text-foreground">Без границ</h3>
-                  <p className="text-foreground/60">Доступ к контенту из любой точки планеты. Обходите любые географические ограничения и наслаждайтесь свободным интернетом.</p>
+                  <p className="text-foreground/60">Доступ к контенту из любой точки планеты. Void Internet открывает для вас весь мир без ограничений.</p>
                 </div>
               </div>
             </motion.div>
@@ -365,7 +382,7 @@ const Index = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-32 px-4 relative">
+      <section className="py-32 px-4 relative" id="тарифы">
         <div className="max-w-7xl mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -374,7 +391,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-5xl md:text-6xl font-bold text-center mb-6 text-foreground"
           >
-            Выберите свой <span className="text-primary">ПУТЬ</span>
+            Выберите свой <span className="text-primary">тариф</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -383,11 +400,11 @@ const Index = () => {
             viewport={{ once: true }}
             className="text-center text-foreground/70 text-xl mb-16"
           >
-            Начните бесплатно или получите полный доступ к космической скорости
+            Чем дольше — тем выгоднее
           </motion.p>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Basic Plan */}
+            {/* 1 Month Plan */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -396,36 +413,40 @@ const Index = () => {
               whileHover={{ y: -10 }}
               className="island-container p-8 group cursor-pointer"
             >
-              <h3 className="text-2xl font-bold mb-2 text-foreground">Базовый</h3>
-              <p className="text-foreground/60 mb-6">Для начала путешествия</p>
+              <h3 className="text-2xl font-bold mb-2 text-foreground">1 месяц</h3>
+              <p className="text-foreground/60 mb-6">Попробуйте Void Internet</p>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">$0</span>
+                <span className="text-5xl font-bold text-foreground">400 ₽</span>
                 <span className="text-foreground/60">/месяц</span>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
-                  5 GB трафика
+                  Безлимитный трафик
                 </li>
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
-                  3 локации
+                  До 5 устройств
                 </li>
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
-                  Базовая скорость
+                  Высокая скорость
+                </li>
+                <li className="flex items-center gap-2 text-foreground/70">
+                  <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
+                  Поддержка 24/7
                 </li>
               </ul>
               <Button 
                 variant="outline" 
                 className="w-full border-primary/50 text-foreground hover:bg-primary/10"
-                onClick={() => window.location.href = '/checkout?plan=basic'}
+                onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
               >
-                Начать
+                Выбрать
               </Button>
             </motion.div>
 
-            {/* Pro Plan - Featured */}
+            {/* 3 Months Plan - Featured */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -440,14 +461,14 @@ const Index = () => {
                 className="absolute inset-0 bg-primary/20 blur-3xl"
               />
               <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground px-4 py-1 text-sm font-bold rounded-full glow-mint">
-                ПОПУЛЯРНЫЙ
+                ВЫГОДНО
               </div>
               <div className="relative z-10">
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Премиум</h3>
-                <p className="text-foreground/60 mb-6">Полная свобода</p>
+                <h3 className="text-2xl font-bold mb-2 text-foreground">3 месяца</h3>
+                <p className="text-foreground/60 mb-6">Экономия 12%</p>
                 <div className="mb-6">
-                  <span className="text-5xl font-bold text-primary">$9.99</span>
-                  <span className="text-foreground/60">/месяц</span>
+                  <span className="text-5xl font-bold text-primary">1 050 ₽</span>
+                  <div className="text-foreground/60 text-sm">350 ₽/месяц</div>
                 </div>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-center gap-2 text-foreground/90">
@@ -456,15 +477,11 @@ const Index = () => {
                   </li>
                   <li className="flex items-center gap-2 text-foreground/90">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
-                    50+ локаций
+                    До 5 устройств
                   </li>
                   <li className="flex items-center gap-2 text-foreground/90">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
                     Максимальная скорость
-                  </li>
-                  <li className="flex items-center gap-2 text-foreground/90">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
-                    До 5 устройств
                   </li>
                   <li className="flex items-center gap-2 text-foreground/90">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint-strong" />
@@ -473,14 +490,14 @@ const Index = () => {
                 </ul>
                 <Button 
                   className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong"
-                  onClick={() => window.location.href = '/checkout?plan=premium'}
+                  onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
                 >
-                  Попробовать бесплатно
+                  Выбрать
                 </Button>
               </div>
             </motion.div>
 
-            {/* Ultimate Plan */}
+            {/* 6 Months Plan */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -489,24 +506,27 @@ const Index = () => {
               whileHover={{ y: -10 }}
               className="island-container p-8 group cursor-pointer"
             >
-              <h3 className="text-2xl font-bold mb-2 text-foreground">Максимум</h3>
-              <p className="text-foreground/60 mb-6">Для профессионалов</p>
+              <div className="absolute -top-2 -right-2 bg-foreground/20 text-foreground px-4 py-1 text-sm font-bold rounded-full">
+                МАКСИМУМ
+              </div>
+              <h3 className="text-2xl font-bold mb-2 text-foreground">6 месяцев</h3>
+              <p className="text-foreground/60 mb-6">Экономия 25%</p>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">$19.99</span>
-                <span className="text-foreground/60">/месяц</span>
+                <span className="text-5xl font-bold text-foreground">2 100 ₽</span>
+                <div className="text-foreground/60 text-sm">350 ₽/месяц</div>
               </div>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
-                  Всё из Премиум
+                  Безлимитный трафик
                 </li>
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
-                  До 10 устройств
+                  До 5 устройств
                 </li>
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
-                  Выделенный IP
+                  Максимальная скорость
                 </li>
                 <li className="flex items-center gap-2 text-foreground/70">
                   <div className="w-1.5 h-1.5 rounded-full bg-primary glow-mint" />
@@ -516,9 +536,9 @@ const Index = () => {
               <Button 
                 variant="outline" 
                 className="w-full border-primary/50 text-foreground hover:bg-primary/10"
-                onClick={() => window.location.href = '/checkout?plan=maximum'}
+                onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
               >
-                Выбрать план
+                Выбрать
               </Button>
             </motion.div>
           </div>
@@ -542,7 +562,7 @@ const Index = () => {
           
           <div className="relative z-10">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              Готовы войти в <span className="text-primary">ПУСТОТУ</span>?
+              Готовы войти в <span className="text-primary">VOID</span>?
             </h2>
             
             {/* Telegram Stats */}
@@ -563,12 +583,16 @@ const Index = () => {
             </motion.div>
             
             <p className="text-xl text-foreground/70 mb-10">
-              Присоединяйтесь к тысячам пользователей, которые выбрали свободу
+              Присоединяйтесь к тысячам пользователей Void Internet
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong text-xl px-12">
+                <Button 
+                  size="lg" 
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong text-xl px-12"
+                  onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
+                >
                   Начать сейчас
                 </Button>
               </motion.div>
@@ -578,9 +602,9 @@ const Index = () => {
                   size="lg" 
                   variant="outline"
                   className="border-primary/50 text-foreground hover:bg-primary/10 text-xl px-12"
-                  onClick={() => window.open('https://t.me/your_channel', '_blank')}
+                  onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
                 >
-                  Присоединиться к Telegram
+                  Открыть Telegram бот
                 </Button>
               </motion.div>
             </div>
@@ -599,14 +623,14 @@ const Index = () => {
         <div className="max-w-6xl mx-auto island-container p-12">
           <div className="grid md:grid-cols-4 gap-12 mb-8">
             <div>
-              <h3 className="text-2xl font-bold text-primary mb-4">VOID VPN</h3>
+              <h3 className="text-2xl font-bold text-primary mb-4">VOID Shield</h3>
               <p className="text-foreground/60">
-                Безопасность в каждом байте
+                Void Internet — свобода в каждом байте
               </p>
             </div>
             
             {[
-              { title: "Продукт", links: ["Возможности", "Цены", "Серверы", "Приложения"] },
+              { title: "Продукт", links: ["Возможности", "Тарифы", "Серверы", "Приложения"] },
               { title: "Компания", links: ["О нас", "Блог", "Карьера", "Пресса"] },
               { title: "Поддержка", links: ["Помощь", "FAQ", "Контакты", "Статус"] },
             ].map((section) => (
@@ -630,7 +654,7 @@ const Index = () => {
           </div>
           
           <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-foreground/60">© 2024 VOID VPN. Все права защищены.</p>
+            <p className="text-foreground/60">© 2024 VOID Shield. Все права защищены.</p>
             <div className="flex gap-6">
               {["Конфиденциальность", "Условия", "Cookies"].map((link) => (
                 <motion.a
