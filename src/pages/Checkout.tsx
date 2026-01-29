@@ -8,9 +8,9 @@ import { useState } from "react";
 import { useAnalytics, trackEvent } from "@/hooks/useAnalytics";
 
 const plans = {
-  basic: { name: "Базовый", price: 0, features: ["5 GB трафика", "3 локации", "Базовая скорость"] },
-  premium: { name: "Премиум", price: 9.99, features: ["Безлимитный трафик", "50+ локаций", "Максимальная скорость", "До 5 устройств"] },
-  maximum: { name: "Максимум", price: 19.99, features: ["Безлимитный трафик", "100+ локаций", "Приоритетная скорость", "До 10 устройств", "Выделенный IP"] }
+  "1month": { name: "1 месяц", price: 400, currency: "₽", features: ["Безлимитный трафик", "До 5 устройств", "Высокая скорость", "Поддержка 24/7"] },
+  "3months": { name: "3 месяца", price: 1050, currency: "₽", features: ["Безлимитный трафик", "До 5 устройств", "Максимальная скорость", "Приоритетная поддержка"] },
+  "6months": { name: "6 месяцев", price: 2100, currency: "₽", features: ["Безлимитный трафик", "До 5 устройств", "Максимальная скорость", "VIP поддержка 24/7"] }
 };
 
 const Checkout = () => {
@@ -59,7 +59,7 @@ const Checkout = () => {
             onClick={() => navigate('/')}
             whileHover={{ scale: 1.05 }}
           >
-            VOID VPN
+            VOID Shield
           </motion.div>
           <Button 
             variant="ghost" 
@@ -99,12 +99,9 @@ const Checkout = () => {
               
               <div className="border-t border-border pt-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-foreground/70">Цена в месяц:</span>
-                  <span className="text-2xl font-bold text-primary">${plan.price}</span>
+                  <span className="text-foreground/70">Итого:</span>
+                  <span className="text-2xl font-bold text-primary">{plan.price} {plan.currency}</span>
                 </div>
-                {plan.price > 0 && (
-                  <p className="text-sm text-foreground/50">Первые 7 дней бесплатно</p>
-                )}
               </div>
             </div>
 
@@ -208,7 +205,7 @@ const Checkout = () => {
                 size="lg" 
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint text-lg"
               >
-                {plan.price > 0 ? `Оплатить $${plan.price}/мес` : 'Начать бесплатно'}
+                Оплатить {plan.price} {plan.currency}
               </Button>
 
               <div className="relative">
