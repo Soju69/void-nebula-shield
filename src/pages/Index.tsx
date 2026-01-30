@@ -27,21 +27,21 @@ const Index = () => {
           >
             VOID Shield
           </motion.div>
-          <nav className="hidden md:flex gap-8">
-            {["Возможности", "Безопасность", "Скорость", "Тарифы"].map((item, i) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="text-foreground/70 hover:text-primary transition-colors"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 + 0.3 }}
-                whileHover={{ y: -2 }}
-              >
-                {item}
-              </motion.a>
-            ))}
-          </nav>
+          
+          {/* User count display */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20"
+          >
+            <Users className="w-4 h-4 text-primary" />
+            <span className="text-foreground/70 text-sm">Пользователей:</span>
+            <span className="text-lg font-bold text-primary">
+              {loading ? '...' : memberCount.toLocaleString()}
+            </span>
+          </motion.div>
+          
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button 
               className="bg-primary text-primary-foreground hover:bg-primary/90 glow-mint"
@@ -252,9 +252,26 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Premium Features Grid */}
-      <section className="py-32 px-4 relative">
-        <div className="max-w-7xl mx-auto">
+      {/* Premium Features Grid with Fade Animation */}
+      <section className="py-32 px-4 relative overflow-hidden">
+        {/* Animated background fade effect */}
+        <motion.div
+          animate={{ 
+            opacity: [0.05, 0.15, 0.05],
+            scale: [1, 1.1, 1]
+          }}
+          transition={{ 
+            duration: 8, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+          className="absolute inset-0 bg-gradient-radial from-primary/20 via-transparent to-transparent pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.15) 0%, transparent 70%)"
+          }}
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -439,11 +456,17 @@ const Index = () => {
               </ul>
               <Button 
                 variant="outline" 
-                className="w-full border-primary/50 text-foreground hover:bg-primary/10"
+                className="w-full border-primary/50 text-foreground hover:bg-primary/10 mb-3"
                 onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
               >
                 Выбрать
               </Button>
+              <button
+                onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
+                className="w-full text-sm text-primary/70 hover:text-primary transition-colors underline underline-offset-2"
+              >
+                Команды TG бота
+              </button>
             </motion.div>
 
             {/* 3 Months Plan - Featured */}
@@ -489,11 +512,17 @@ const Index = () => {
                   </li>
                 </ul>
                 <Button 
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-mint-strong mb-3"
                   onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
                 >
                   Выбрать
                 </Button>
+                <button
+                  onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
+                  className="w-full text-sm text-primary/70 hover:text-primary transition-colors underline underline-offset-2"
+                >
+                  Команды TG бота
+                </button>
               </div>
             </motion.div>
 
@@ -535,11 +564,17 @@ const Index = () => {
               </ul>
               <Button 
                 variant="outline" 
-                className="w-full border-primary/50 text-foreground hover:bg-primary/10"
+                className="w-full border-primary/50 text-foreground hover:bg-primary/10 mb-3"
                 onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
               >
                 Выбрать
               </Button>
+              <button
+                onClick={() => window.open(TELEGRAM_BOT_URL, '_blank')}
+                className="w-full text-sm text-primary/70 hover:text-primary transition-colors underline underline-offset-2"
+              >
+                Команды TG бота
+              </button>
             </motion.div>
           </div>
         </div>
@@ -612,7 +647,7 @@ const Index = () => {
         </motion.div>
       </section>
 
-      {/* Footer - Island Style */}
+      {/* Footer - Simplified Island Style */}
       <motion.footer
         initial={{ y: 100, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -620,53 +655,16 @@ const Index = () => {
         viewport={{ once: true }}
         className="pb-8 px-4"
       >
-        <div className="max-w-6xl mx-auto island-container p-12">
-          <div className="grid md:grid-cols-4 gap-12 mb-8">
-            <div>
-              <h3 className="text-2xl font-bold text-primary mb-4">VOID Shield</h3>
-              <p className="text-foreground/60">
-                Void Internet — свобода в каждом байте
-              </p>
-            </div>
-            
-            {[
-              { title: "Продукт", links: ["Возможности", "Тарифы", "Серверы", "Приложения"] },
-              { title: "Компания", links: ["О нас", "Блог", "Карьера", "Пресса"] },
-              { title: "Поддержка", links: ["Помощь", "FAQ", "Контакты", "Статус"] },
-            ].map((section) => (
-              <div key={section.title}>
-                <h4 className="font-bold text-foreground mb-4">{section.title}</h4>
-                <ul className="space-y-2">
-                  {section.links.map((link) => (
-                    <li key={link}>
-                      <motion.a
-                        href="#"
-                        className="text-foreground/60 hover:text-primary transition-colors"
-                        whileHover={{ x: 5 }}
-                      >
-                        {link}
-                      </motion.a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-          
-          <div className="border-t border-border/50 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="max-w-6xl mx-auto island-container p-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-foreground/60">© 2024 VOID Shield. Все права защищены.</p>
-            <div className="flex gap-6">
-              {["Конфиденциальность", "Условия", "Cookies"].map((link) => (
-                <motion.a
-                  key={link}
-                  href="#"
-                  className="text-foreground/60 hover:text-primary transition-colors"
-                  whileHover={{ y: -2 }}
-                >
-                  {link}
-                </motion.a>
-              ))}
-            </div>
+            <motion.a
+              href="#"
+              className="text-foreground/60 hover:text-primary transition-colors"
+              whileHover={{ y: -2 }}
+            >
+              Политика конфиденциальности
+            </motion.a>
           </div>
         </div>
       </motion.footer>
