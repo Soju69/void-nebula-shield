@@ -14,22 +14,18 @@
 
 import { ADMIN_USERS, SESSION_CONFIG, AdminUser } from '@/config/admin-config';
 
-// Импортируем bcryptjs для работы с хешами в браузере
-// Установите: npm install bcryptjs
-// import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
 /**
- * MOCK функция для проверки пароля (замените на реальную bcrypt)
- * В продакшене используйте bcrypt.compare()
+ * Проверка пароля через bcrypt
  */
 const verifyPassword = async (password: string, hash: string): Promise<boolean> => {
-  // TODO: Раскомментируйте для использования bcrypt
-  // const bcrypt = await import('bcryptjs');
-  // return await bcrypt.compare(password, hash);
-  
-  // ВРЕМЕННАЯ MOCK ПРОВЕРКА (УДАЛИТЕ В ПРОДАКШЕНЕ!)
-  console.warn('⚠️ Используется mock проверка паролей. Установите bcryptjs!');
-  return password === 'admin123'; // Небезопасно! Только для демо!
+  try {
+    return await bcrypt.compare(password, hash);
+  } catch (error) {
+    console.error('Ошибка проверки пароля:', error);
+    return false;
+  }
 };
 
 /**
