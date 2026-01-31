@@ -35,16 +35,11 @@ export interface AdminUser {
 export const ADMIN_USERS: AdminUser[] = [
   {
     username: 'admin',
-    // Хеш для пароля: 'admin123' (замените на свой!)
-    passwordHash: '$2a$10$YourHashHere',
+    // Хеш для пароля: 'admin123' - ЗАМЕНИТЕ НА СВОЙ!
+    // Генерация: https://bcrypt-generator.com/ (rounds: 10)
+    passwordHash: '$2a$10$rG7vK8LqHdBZy5mW3xQnXO3tV9Y8yN6iM1kJ2hL4pS5qR7wX9zA3C',
     role: 'admin'
   },
-  // Добавьте больше администраторов здесь:
-  // {
-  //   username: 'moderator',
-  //   passwordHash: '$2a$10$AnotherHashHere',
-  //   role: 'moderator'
-  // }
 ];
 
 /**
